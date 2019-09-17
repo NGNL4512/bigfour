@@ -127,10 +127,8 @@ def init():
         f=open(filepath+filename[file],'r',encoding='UTF-8')
         s1 = f.readlines()
         print(s1)
-        #s1=input("請輸入單字或句子:")
         distance,text,mood=similar_score(s1)
         score=sentencescore(text,mood)
-        #bar_graph(score)
         i=i+1
         print(i,".",score)
         f.close()
