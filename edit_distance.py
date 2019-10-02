@@ -19,7 +19,7 @@ def editDistance(s1, s2):
     #print(distances[-1])
     return distances[-1]
 '''
-切割
+切割逗點
 '''
 def sentence_cut(sent):
     f=open(sent,'r+',encoding='UTF-8')
@@ -109,7 +109,16 @@ def sentencescore(text,mood):
     score.append(anxietyscore)
     score.append(angryscore)
     return score
-
+'''
+取出情緒比例
+'''
+def sumnum(sumscore):
+    onenum=0
+    for i in range(len(sumscore)):
+        onenum+=sumscore[i]
+    for i in range(len(sumscore)):
+        sumscore[i]=sumscore[i]/onenum
+    return sumscore
 def init():
     #手動輸入
 # =============================================================================
@@ -139,6 +148,8 @@ def init():
         f.close()
         for j in range(len(score)):
             sumscore[j]=sumscore[j]+score[j]
+    sumscore=sumnum(sumscore)
+    #print(sumscore)
     return sumscore
 if __name__=='__main__':
     init()
