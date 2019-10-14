@@ -1,17 +1,46 @@
 import jieba
 import os
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt #有需要繪製長條圖再開
 
 #切換自訂詞庫
 jieba.set_dictionary('dict1.txt')
 #jieba.add_word('增加') 手動增加詞庫
+
+
+
+
+
+#===資料夾全域變數================
+#在cutword()跟searchkey()內
+#把整篇文章斷詞後的結果 EX.我/很/高興
+outtxt='./斷詞輸出/斷詞輸出.txt'
+
+#================================
+#在init()內
+#語音轉文字，沒有做過任何處理的版本
+recording="./speaktxt/recording.txt"
+
+#================================
+#在similar_score()內
+#詞彙語料庫情緒分類(同義詞跟分數的部分)
+similar = "./similar/"
+
+#================================
+#在 readfile()內，現在沒用到
+#speaktxt = "./speaktxt/"
+#================================
+
+
+
+
+
 
 '''
 文章斷詞
 '''
 def cutword(filename):
     cutin=filename #放進去斷詞的文章
-    outtxt='./斷詞輸出/斷詞輸出.txt'
+    #outtxt='./斷詞輸出/斷詞輸出.txt'
 
     f=open(cutin,'r',encoding='UTF-8')
     out=open(outtxt,'w',encoding='UTF-8')
@@ -28,8 +57,7 @@ def cutword(filename):
 跟詞庫比較，並返回加總分數
 '''
 def searchkey(filesimilar):
-    outtxt='./斷詞輸出/斷詞輸出.txt'
-    #outtxt=filename
+    #outtxt='./斷詞輸出/斷詞輸出.txt'
     keytxt=filesimilar
 
     fl=open(outtxt,'r+',encoding='UTF-8')
@@ -112,23 +140,23 @@ def searchkey(filesimilar):
 #現沒用到#
 '''
 def readfile():
-    filepath = "./speaktxt/" #存放文字檔的路徑
-    filename= os.listdir(filepath) #資料夾下的所有檔案 
+    #speaktxt = "./speaktxt/" #存放文字檔的路徑
+    filename= os.listdir(speaktxt) #資料夾下的所有檔案 
     num=0
-    for file in range(len(filename)):
+    for file in range(len(speaktxt)):
         print(num+1, end=".")
         num+=1
         print(filename[file])
     name = input('請輸入檔名：')
-    return filepath+filename[int(name)-1]
+    return speaktxt+filename[int(name)-1]
 
 def similar_score():
-    filepath = "./similar/" #存放文字檔的路徑
-    filename= os.listdir(filepath) #資料夾下的所有檔案 
+    #similar = "./similar/" #存放文字檔的路徑
+    filename= os.listdir(similar) #資料夾下的所有檔案 
     allsimilar=[]
     for file in range(len(filename)):
         #print(filepath+filename[file])
-        score=searchkey(filepath+filename[file])
+        score=searchkey(similar+filename[file])
         allsimilar.append(score)
     #for i in range(0,score.__len__(),1):
     return allsimilar
@@ -149,9 +177,9 @@ def bar_graph(score): #害怕，悲傷，憂鬱，焦慮，生氣
     
     
 def init():
-    filename="./speaktxt/recording.txt" #選擇錄音轉換成文字的檔案
+    #recording="./speaktxt/recording.txt" #選擇錄音轉換成文字的檔案
     #filesimilar=keysimilar()
-    cutword(filename) #斷詞
+    cutword(recording) #斷詞
     score=similar_score()
     #bar_graph(score)
     #print(score)

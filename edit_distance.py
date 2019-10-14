@@ -1,4 +1,22 @@
 import os
+
+
+#===資料夾全域變數================
+#在 similar_score()內
+#要比較最短編輯的句子(情緒句子跟分數)
+sentence = "./sentence/"
+
+#================================
+#在init()內
+#放語音轉文字切割而成的句子，每一句分成一個txt檔(不限檔名，txt檔就收)
+brokensent = "./brokensent/"
+
+#================================
+
+
+
+
+
 '''
 比較兩個句子的最短編輯距離
 '''
@@ -38,14 +56,14 @@ def sentence_cut(sent):
 返回差距最短句子分數，情緒
 '''
 def similar_score(s1):
-    filepath = "./sentence/" #存放文字檔的路徑
-    filename= os.listdir(filepath) #資料夾下的所有檔案 
+    #sentence = "./sentence/" #存放文字檔的路徑
+    filename= os.listdir(sentence) #資料夾下的所有檔案 
     bignum=100000
     distancearray=[]
     text=[]
     osfile=[]
     for file in range(len(filename)):
-        s2=sentence_cut(filepath+filename[file])#切割
+        s2=sentence_cut(sentence+filename[file])#切割
         for i in range(0,s2.__len__(),1):
             distance=editDistance(s1, s2[i][1])#最短編輯距離
             #print(s2[i][1])
@@ -135,11 +153,11 @@ def init():
 # =============================================================================
     #讀文字檔
     sumscore=[0,0,0,0,0]
-    filepath = "./brokensent/" #存放文字檔的路徑
-    filename= os.listdir(filepath) #資料夾下的所有檔案 
+    #brokensent = "./brokensent/" #存放文字檔的路徑
+    filename= os.listdir(brokensent) #資料夾下的所有檔案 
     #i=0
     for file in range(len(filename)):
-        f=open(filepath+filename[file],'r',encoding='UTF-8')
+        f=open(brokensent+filename[file],'r',encoding='UTF-8')
         s1 = "".join(f.readlines())
         distance,text,mood=similar_score(s1)
         score=sentencescore(text,mood)
